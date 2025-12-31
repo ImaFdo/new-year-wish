@@ -467,7 +467,11 @@ function displayWishInJar(wishText) {
     const wishItem = document.createElement('div');
     wishItem.className = 'wish-item';
     wishItem.textContent = '⭐ ' + wishText;
-    collectedWishes.appendChild(wishItem);
+    collectedWishes.prepend(wishItem);
+    
+    // Scroll to bottom to show the new wish
+    const jarBody = collectedWishes.parentElement;
+    jarBody.scrollTop = jarBody.scrollHeight;
 }
 
 // Load wishes when page loads

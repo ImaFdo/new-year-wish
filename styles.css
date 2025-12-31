@@ -178,7 +178,85 @@ body {
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    z-index: 2;
 }
+
+/* Popup Fireworks */
+.popup-fireworks {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.popup-spark {
+    position: absolute;
+    font-size: 2em;
+    animation: sparkBurst 2s ease-out infinite;
+    opacity: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popup-spark.spark-1 {
+    animation-delay: 0s;
+}
+
+.popup-spark.spark-2 {
+    animation-delay: 0.3s;
+}
+
+.popup-spark.spark-3 {
+    animation-delay: 0.6s;
+}
+
+.popup-spark.spark-4 {
+    animation-delay: 0.9s;
+}
+
+.popup-spark.spark-5 {
+    animation-delay: 1.2s;
+}
+
+.popup-spark.spark-6 {
+    animation-delay: 1.5s;
+}
+
+.popup-spark.spark-7 {
+    animation-delay: 1.8s;
+}
+
+.popup-spark.spark-8 {
+    animation-delay: 0.5s;
+}
+
+@keyframes sparkBurst {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    10% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(0.5);
+    }
+}
+
+.popup-spark.spark-1 { --x: 80px; --y: -60px; }
+.popup-spark.spark-2 { --x: -70px; --y: -80px; }
+.popup-spark.spark-3 { --x: 90px; --y: 70px; }
+.popup-spark.spark-4 { --x: -80px; --y: 60px; }
+.popup-spark.spark-5 { --x: 0px; --y: -100px; }
+.popup-spark.spark-6 { --x: 100px; --y: 0px; }
+.popup-spark.spark-7 { --x: -90px; --y: 0px; }
+.popup-spark.spark-8 { --x: 0px; --y: 90px; }
 
 .gift-circle::before {
     display: none;
@@ -200,14 +278,14 @@ body {
 }
 
 .gift-icon {
-    font-size: 7em;
+    font-size: 12em;
     margin-bottom: 15px;
     animation: giftJump 1s ease-in-out infinite;
     filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
 }
 
 .gift-text {
-    font-size: 2em;
+    font-size: 3em;
     font-weight: bold;
     line-height: 1.3;
     margin-bottom: 20px;
@@ -1465,7 +1543,7 @@ body {
 
 .collected-wishes {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: flex-start;
     gap: 8px;
 }
@@ -1495,7 +1573,7 @@ body {
 @keyframes wishAppear {
     0% {
         opacity: 0;
-        transform: scale(0) translateY(20px);
+        transform: scale(0) translateY(-20px);
     }
     100% {
         opacity: 1;
@@ -1600,48 +1678,72 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .main-title {
+        font-size: 3em;
+    }
+    
+    .gift-icon {
+        font-size: 10em;
+    }
+    
+    .gift-text {
+        font-size: 2.5em;
+    }
+    
+    .popup-spark {
+        font-size: 1.8em;
+    }
+}
+
 @media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+    
     .main-title {
         font-size: 2.5em;
+        padding: 0 10px;
+    }
+    
+    .title-sparkle {
+        font-size: 0.8em;
     }
     
     .greeting-line {
         font-size: 1.2em;
         padding: 0 20px;
+        margin: 10px 0;
     }
     
     .popup-content {
         width: 90%;
-        max-width: 350px;
-        height: 350px;
-    }
-    
-    .flower-circle {
-        width: 320px;
-        height: 320px;
-    }
-    
-    .flower {
-        font-size: 2em;
-    }
-    
-    .gift-circle {
-        width: 240px;
-        height: 240px;
-    }
-    
-    .gift-circle::before {
-        width: 260px;
-        height: 260px;
+        max-width: 400px;
+        height: 400px;
     }
     
     .gift-icon {
-        font-size: 3.5em;
+        font-size: 8em;
+        margin-bottom: 10px;
     }
     
     .gift-text {
+        font-size: 2em;
+        line-height: 1.2;
+    }
+    
+    .popup-spark {
         font-size: 1.5em;
     }
+    
+    .popup-spark.spark-1 { --x: 60px; --y: -50px; }
+    .popup-spark.spark-2 { --x: -55px; --y: -60px; }
+    .popup-spark.spark-3 { --x: 70px; --y: 55px; }
+    .popup-spark.spark-4 { --x: -60px; --y: 50px; }
+    .popup-spark.spark-5 { --x: 0px; --y: -80px; }
+    .popup-spark.spark-6 { --x: 80px; --y: 0px; }
+    .popup-spark.spark-7 { --x: -70px; --y: 0px; }
+    .popup-spark.spark-8 { --x: 0px; --y: 70px; }
     
     .countdown-text .number-animate {
         font-size: 4em;
@@ -1650,11 +1752,25 @@ body {
     .from-to-container {
         flex-direction: column;
         gap: 20px;
+        padding: 0 15px;
     }
     
     .name-input {
-        font-size: 3em;
+        font-size: 2.5em;
         width: 90%;
+        padding: 10px 20px;
+    }
+    
+    .scroll-indicator {
+        bottom: 20px;
+    }
+    
+    .scroll-text {
+        font-size: 1.8em;
+    }
+    
+    .scroll-arrow {
+        font-size: 2em;
     }
     
     .feature-btn {
@@ -1689,50 +1805,75 @@ body {
     .content-section {
         padding: 30px 15px;
     }
+    
+    .bg-lantern {
+        font-size: 2.5em;
+    }
+    
+    .floating-stars .star {
+        font-size: 1.8em;
+    }
+    
+    .lantern-main {
+        font-size: 100px;
+    }
+    
+    .lantern-left, .lantern-right {
+        font-size: 60px;
+    }
+    
+    .bear-text {
+        font-size: 2em;
+    }
 }
 
 @media (max-width: 480px) {
     .main-title {
-        font-size: 2em;
+        font-size: 1.8em;
+        padding: 0 10px;
+    }
+    
+    .title-sparkle {
+        font-size: 0.7em;
     }
     
     .greeting-line {
         font-size: 1em;
         padding: 0 15px;
+        margin: 8px 0;
     }
     
     .popup-content {
         width: 95%;
-        max-width: 300px;
-        height: 300px;
-    }
-    
-    .flower-circle {
-        width: 280px;
-        height: 280px;
-    }
-    
-    .flower {
-        font-size: 1.8em;
-    }
-    
-    .gift-circle {
-        width: 200px;
-        height: 200px;
-    }
-    
-    .gift-circle::before {
-        width: 220px;
-        height: 220px;
+        max-width: 320px;
+        height: 320px;
     }
     
     .gift-icon {
-        font-size: 2.5em;
+        font-size: 6em;
+        margin-bottom: 8px;
     }
     
     .gift-text {
-        font-size: 1.2em;
+        font-size: 1.5em;
         line-height: 1.2;
+    }
+    
+    .popup-spark {
+        font-size: 1.2em;
+    }
+    
+    .popup-spark.spark-1 { --x: 45px; --y: -40px; }
+    .popup-spark.spark-2 { --x: -40px; --y: -45px; }
+    .popup-spark.spark-3 { --x: 50px; --y: 40px; }
+    .popup-spark.spark-4 { --x: -45px; --y: 38px; }
+    .popup-spark.spark-5 { --x: 0px; --y: -60px; }
+    .popup-spark.spark-6 { --x: 60px; --y: 0px; }
+    .popup-spark.spark-7 { --x: -55px; --y: 0px; }
+    .popup-spark.spark-8 { --x: 0px; --y: 55px; }
+    
+    .circle-glow {
+        display: none;
     }
     
     .countdown-text {
@@ -1744,13 +1885,26 @@ body {
     }
     
     .name-input {
-        font-size: 2em;
+        font-size: 1.8em;
         width: 95%;
         padding: 8px 15px;
     }
     
     .from-section label, .to-section label {
         font-size: 1.2em;
+    }
+    
+    .scroll-indicator {
+        bottom: 15px;
+    }
+    
+    .scroll-text {
+        font-size: 1.5em;
+        padding: 8px 20px;
+    }
+    
+    .scroll-arrow {
+        font-size: 1.8em;
     }
     
     .feature-btn {
@@ -1765,6 +1919,7 @@ body {
     
     .surprise-text {
         font-size: 1.5em;
+        padding: 0 10px;
     }
     
     .jar {
@@ -1805,22 +1960,49 @@ body {
     
     .final-text {
         font-size: 1.5em;
+        padding: 0 10px;
     }
     
     .wish-jar-section {
         padding: 40px 15px;
     }
     
-    .bear-body {
+    .bg-lantern {
+        font-size: 2em;
+    }
+    
+    .floating-stars .star {
+        font-size: 1.5em;
+    }
+    
+    .lantern-main {
         font-size: 80px;
     }
     
-    .flowers {
+    .lantern-left, .lantern-right {
         font-size: 50px;
     }
     
     .bear-text {
         font-size: 1.5em;
+        padding: 0 15px;
+        text-align: center;
+    }
+    
+    .interactive-feature {
+        margin: 40px 0;
+    }
+    
+    .wand-stick {
+        height: 30px;
+    }
+    
+    .wand-star {
+        font-size: 20px;
+    }
+    
+    .sparkle {
+        font-size: 14px;
     }
 }
 
