@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2026! 🎊</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Custom Cursor (Magical Wand) -->
+    <div class="magic-wand">
+        <div class="wand-stick"></div>
+        <div class="wand-star">⭐</div>
+        <div class="sparkle sparkle-1">✨</div>
+        <div class="sparkle sparkle-2">✨</div>
+        <div class="sparkle sparkle-3">✨</div>
+    </div>
+
+    <!-- Initial Popup -->
+    <div class="initial-popup" id="initialPopup">
+        <div class="popup-content">
+            <div class="flower-circle">
+                <div class="flower f1">🌸</div>
+                <div class="flower f2">🌺</div>
+                <div class="flower f3">🌻</div>
+                <div class="flower f4">🌷</div>
+                <div class="flower f5">🌹</div>
+                <div class="flower f6">🌼</div>
+                <div class="flower f7">💐</div>
+                <div class="flower f8">🌸</div>
+                <div class="flower f9">🌺</div>
+                <div class="flower f10">🌻</div>
+                <div class="flower f11">🌷</div>
+                <div class="flower f12">🌹</div>
+            </div>
+            <div class="gift-circle" id="openCardBtn">
+                <div class="circle-glow"></div>
+                <div class="gift-content">
+                    <div class="gift-icon">🎁</div>
+                    <div class="gift-text">A Special Gift<br>For You!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bear Animation -->
+    <div class="bear-animation" id="bearAnimation">
+        <div class="bear">
+            <div class="bear-body">🧸</div>
+            <div class="flowers">💐</div>
+        </div>
+        <div class="bear-text">Happy New Year 2026! 🎉</div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="main-card" id="mainCard">
+        <!-- Fireworks Canvas -->
+        <canvas id="fireworksCanvas"></canvas>
+
+        <!-- Floating Stars -->
+        <div class="floating-stars">
+            <div class="star">⭐</div>
+            <div class="star">🌟</div>
+            <div class="star">✨</div>
+            <div class="star">💫</div>
+            <div class="star">⭐</div>
+            <div class="star">🌟</div>
+        </div>
+
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="from-to-container">
+                <div class="from-section">
+                    <label>From:</label>
+                    <input type="text" id="fromName" placeholder="Your Name" class="name-input">
+                </div>
+                <div class="to-section">
+                    <label>To:</label>
+                    <input type="text" id="toName" placeholder="Friend's Name" class="name-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <h1 class="main-title">
+                <span class="title-sparkle">✨</span>
+                Happy New Year 2026!
+                <span class="title-sparkle">✨</span>
+            </h1>
+            
+            <div class="greeting-text">
+                <p class="greeting-line fade-in-1">May this new year bring you endless joy, prosperity, and success!</p>
+                <p class="greeting-line fade-in-2">May every moment be filled with love, laughter, and beautiful memories!</p>
+                <p class="greeting-line fade-in-3">Wishing you a year full of new opportunities and amazing adventures!</p>
+            </div>
+
+            <!-- Interactive Click Feature 1 -->
+            <div class="interactive-feature">
+                <button class="feature-btn" id="surpriseBtn1">
+                    <span>🎉 Click for a Surprise! 🎉</span>
+                </button>
+                <div class="surprise-content" id="surprise1">
+                    <p class="surprise-text">🌟 May your dreams soar higher than ever before! 🌟</p>
+                </div>
+            </div>
+
+            <!-- Floating Balloons -->
+            <div class="balloons-container">
+                <div class="balloon balloon-1">🎈</div>
+                <div class="balloon balloon-2">🎈</div>
+                <div class="balloon balloon-3">🎈</div>
+            </div>
+
+            <!-- New Year Countdown Animation -->
+            <div class="countdown-section">
+                <div class="countdown-text">
+                    <span class="number-animate">2</span>
+                    <span class="number-animate">0</span>
+                    <span class="number-animate">2</span>
+                    <span class="number-animate">6</span>
+                </div>
+            </div>
+
+            <!-- Interactive Click Feature 2 -->
+            <div class="interactive-feature">
+                <button class="feature-btn" id="surpriseBtn2">
+                    <span>💫 Reveal Your Fortune! 💫</span>
+                </button>
+                <div class="surprise-content" id="surprise2">
+                    <p class="surprise-text">🍀 Good luck will follow you everywhere this year! 🍀</p>
+                </div>
+            </div>
+
+            <!-- Wish Jar Section -->
+            <div class="wish-jar-section">
+                <h2 class="jar-title">
+                    <span class="jar-emoji">🏺</span>
+                    Make a Wish for 2026
+                    <span class="jar-emoji">🏺</span>
+                </h2>
+                <div class="jar-container">
+                    <div class="jar">
+                        <div class="jar-top"></div>
+                        <div class="jar-body">
+                            <div class="collected-wishes" id="collectedWishes"></div>
+                        </div>
+                        <div class="jar-glow"></div>
+                    </div>
+                </div>
+                <div class="wish-input-section">
+                    <input type="text" id="visitorName" placeholder="Your Name (optional)" class="visitor-name-input">
+                    <textarea id="wishInput" placeholder="Write your wish here... ✨" class="wish-textarea"></textarea>
+                    <button class="add-wish-btn" id="addWishBtn">
+                        <span>Add to Jar 🌟</span>
+                    </button>
+                </div>
+                <div class="wishes-display" id="wishesDisplay"></div>
+                
+                <!-- Hidden email config - Replace YOUR_EMAIL with your actual email -->
+                <input type="hidden" id="recipientEmail" value="fernandoimasha2003@gmail.com">
+            </div>
+
+            <!-- Interactive Click Feature 3 -->
+            <div class="interactive-feature">
+                <button class="feature-btn" id="surpriseBtn3">
+                    <span>🎊 One More Surprise! 🎊</span>
+                </button>
+                <div class="surprise-content" id="surprise3">
+                    <p class="surprise-text">✨ You are destined for greatness in 2026! ✨</p>
+                </div>
+            </div>
+
+            <!-- Final Message -->
+            <div class="final-message">
+                <p class="final-text">Here's to new beginnings, fresh starts, and endless possibilities!</p>
+                <p class="final-text">Cheers to 2026! 🥂</p>
+            </div>
+
+            <!-- Confetti Button -->
+            <div class="confetti-section">
+                <button class="confetti-btn" id="confettiBtn">
+                    🎊 Make It Rain! 🎊
+                </button>
+            </div>
+        </div>
+
+        <!-- Music Control -->
+        <div class="music-control">
+            <button class="music-btn" id="musicBtn">
+                <span id="musicIcon">🔊</span>
+            </button>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- AUDIO SOURCE - ADD YOUR MUSIC FILE HERE -->
+        <!-- ============================================ -->
+        <!-- Replace the src="" with your audio file path or URL -->
+        <!-- Supported formats: .mp3, .wav, .ogg -->
+        <!-- Example local file: src="music/your-song.mp3" -->
+        <!-- Example URL: src="https://example.com/song.mp3" -->
+        <audio id="bgMusic" loop preload="auto">
+            <source src="happy-new-year-music-456991 (1).mp3" type="audio/mpeg">
+            <!-- Add your audio file path above ↑ -->
+        </audio>
+        <!-- ============================================ -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
