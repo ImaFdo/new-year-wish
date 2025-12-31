@@ -1,10 +1,34 @@
 // Custom Cursor Movement
 const magicWand = document.querySelector('.magic-wand');
+let wandTrails = [];
+const maxTrails = 10;
 
 document.addEventListener('mousemove', (e) => {
     magicWand.style.left = e.clientX + 'px';
     magicWand.style.top = e.clientY + 'px';
+    
+    // Create magic trail
+    createWandTrail(e.clientX, e.clientY);
 });
+
+function createWandTrail(x, y) {
+    // Create sparkle element
+    const sparkle = document.createElement('div');
+    sparkle.className = 'wand-trail';
+    sparkle.style.left = x + 'px';
+    sparkle.style.top = y + 'px';
+    
+    // Random sparkle type
+    const sparkles = ['✨', '⭐', '💫', '🌟', '✦', '★'];
+    sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+    
+    document.body.appendChild(sparkle);
+    
+    // Animate and remove
+    setTimeout(() => {
+        sparkle.remove();
+    }, 800);
+}
 
 // Get URL parameters and populate From/To fields
 function getUrlParameter(name) {
