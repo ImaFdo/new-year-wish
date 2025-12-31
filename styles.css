@@ -1,20 +1,82 @@
-
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x: hidden;
-    background: linear-gradient(135deg, #0a0033 0%, #1a0a3e 25%, #2d1b69 50%, #1a0a3e 75%, #0a0033 100%);
-    color: #fff;
+/* =============================================================================
+   CSS CUSTOM PROPERTIES (Variables)
+   ============================================================================= */
+:root {
+    /* Color Palette */
+    --color-primary-dark: #0a0033;
+    --color-primary-purple: #1a0a3e;
+    --color-primary-light: #2d1b69;
+    --color-accent-gold: #ffd700;
+    --color-accent-pink: #ff6b9d;
+    --color-accent-cyan: #4ecdc4;
+    --color-accent-blue: #667eea;
+    --color-accent-purple: #f093fb;
+    --color-white: #fff;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 40px;
+    --spacing-xl: 80px;
+    
+    /* Typography */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    
+    /* Effects */
+    --shadow-gold: 0 0 10px rgba(255, 215, 0, 0.8);
+    --shadow-soft: 0 0 20px rgba(0, 0, 0, 0.3);
+    --blur-amount: 10px;
+    
+    /* Animations */
+    --transition-fast: 0.1s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Z-index layers */
+    --z-cursor: 10000;
+    --z-trail: 9999;
+    --z-popup: 9999;
+    --z-overlay: 100;
 }
 
-/* Custom Cursor - Magic Wand */
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    overflow-x: hidden;
+    background: linear-gradient(
+        135deg, 
+        var(--color-primary-dark) 0%, 
+        var(--color-primary-purple) 25%, 
+        var(--color-primary-light) 50%, 
+        var(--color-primary-purple) 75%, 
+        var(--color-primary-dark) 100%
+    );
+    color: var(--color-white);
+}
+
+/* =============================================================================
+   CUSTOM CURSOR - MAGIC WAND
+   ============================================================================= */
 .magic-wand {
     position: fixed;
     pointer-events: none;
-    z-index: 10000;
+    z-index: var(--z-cursor);
     transform: translate(-50%, -50%) rotate(-45deg);
-    transition: transform 0.1s ease;
-    display: none; /* Hidden by default on touch devices */
+    transition: transform var(--transition-fast);
+    display: none;
 }
 
 /* Show cursor only on non-touch devices */
@@ -31,16 +93,16 @@ body {
 .wand-stick {
     width: 3px;
     height: 40px;
-    background: linear-gradient(to bottom, #ffd700, #ff6b9d);
+    background: linear-gradient(to bottom, var(--color-accent-gold), var(--color-accent-pink));
     border-radius: 2px;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    box-shadow: var(--shadow-gold);
 }
 
 .wand-star {
     position: absolute;
     top: -15px;
     left: -10px;
-    font-size: 24px;
+    font-size: var(--font-size-xl);
     animation: starPulse 1s infinite;
     filter: drop-shadow(0 0 8px gold);
 }
@@ -85,8 +147,8 @@ body {
 .wand-trail {
     position: fixed;
     pointer-events: none;
-    z-index: 9999;
-    font-size: 20px;
+    z-index: var(--z-trail);
+    font-size: var(--font-size-lg);
     animation: wandTrailFade 0.8s ease-out forwards;
     transform: translate(-50%, -50%);
 }
@@ -106,7 +168,9 @@ body {
     }
 }
 
-/* Initial Popup */
+/* =============================================================================
+   INITIAL POPUP
+   ============================================================================= */
 .initial-popup {
     position: fixed;
     top: 0;
@@ -117,9 +181,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    animation: fadeIn 0.5s ease;
-    backdrop-filter: blur(10px);
+    z-index: var(--z-popup);
+    animation: fadeIn var(--transition-slow) ease;
+    backdrop-filter: blur(var(--blur-amount));
 }
 
 .popup-content {
@@ -170,14 +234,13 @@ body {
     50% { transform: scale(1.2) rotate(15deg); }
 }
 
-/* Gift Circle */
 .gift-circle {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
     z-index: 2;
 }
 
