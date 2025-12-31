@@ -43,11 +43,12 @@
         </div>
     </div>
 
-    <!-- Bear Animation -->
+    <!-- Lantern Animation -->
     <div class="bear-animation" id="bearAnimation">
         <div class="bear">
-            <div class="bear-body">🧸</div>
-            <div class="flowers">💐</div>
+            <div class="lantern-main">🏮</div>
+            <div class="lantern-left">🏮</div>
+            <div class="lantern-right">🏮</div>
         </div>
         <div class="bear-text">Happy New Year 2026! 🎉</div>
     </div>
@@ -56,6 +57,16 @@
     <div class="main-card" id="mainCard">
         <!-- Fireworks Canvas -->
         <canvas id="fireworksCanvas"></canvas>
+
+        <!-- Floating Lanterns -->
+        <div class="floating-lanterns">
+            <div class="bg-lantern lantern-1">🏮</div>
+            <div class="bg-lantern lantern-2">🏮</div>
+            <div class="bg-lantern lantern-3">🏮</div>
+            <div class="bg-lantern lantern-4">🏮</div>
+            <div class="bg-lantern lantern-5">🏮</div>
+            <div class="bg-lantern lantern-6">🏮</div>
+        </div>
 
         <!-- Floating Stars -->
         <div class="floating-stars">
@@ -72,11 +83,11 @@
             <div class="from-to-container">
                 <div class="from-section">
                     <label>From:</label>
-                    <input type="text" id="fromName" placeholder="Your Name" class="name-input">
+                    <input type="text" id="fromName" placeholder="Your Name" class="name-input" disabled>
                 </div>
                 <div class="to-section">
                     <label>To:</label>
-                    <input type="text" id="toName" placeholder="Friend's Name" class="name-input">
+                    <input type="text" id="toName" placeholder="Friend's Name" class="name-input" disabled>
                 </div>
             </div>
         </div>
@@ -95,14 +106,17 @@
                 <p class="greeting-line fade-in-3">Wishing you a year full of new opportunities and amazing adventures!</p>
             </div>
 
-            <!-- Interactive Click Feature 1 -->
-            <div class="interactive-feature">
-                <button class="feature-btn" id="surpriseBtn1">
-                    <span>🎉 Click for a Surprise! 🎉</span>
-                </button>
-                <div class="surprise-content" id="surprise1">
-                    <p class="surprise-text">🌟 May your dreams soar higher than ever before! 🌟</p>
-                </div>
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" id="scrollIndicator">
+                <div class="scroll-text">Scroll</div>
+                <div class="scroll-arrow">↓</div>
+            </div>
+
+            <!-- Hidden Content Below -->
+            <div class="hidden-content" id="hiddenContent">
+            <!-- Message -->
+            <div class="surprise-message-display">
+                <p class="surprise-text">🌟 May your dreams soar higher than ever before! 🌟</p>
             </div>
 
             <!-- Floating Balloons -->
@@ -119,16 +133,6 @@
                     <span class="number-animate">0</span>
                     <span class="number-animate">2</span>
                     <span class="number-animate">6</span>
-                </div>
-            </div>
-
-            <!-- Interactive Click Feature 2 -->
-            <div class="interactive-feature">
-                <button class="feature-btn" id="surpriseBtn2">
-                    <span>💫 Reveal Your Fortune! 💫</span>
-                </button>
-                <div class="surprise-content" id="surprise2">
-                    <p class="surprise-text">🍀 Good luck will follow you everywhere this year! 🍀</p>
                 </div>
             </div>
 
@@ -155,20 +159,9 @@
                         <span>Add to Jar 🌟</span>
                     </button>
                 </div>
-                <div class="wishes-display" id="wishesDisplay"></div>
                 
                 <!-- Hidden email config - Replace YOUR_EMAIL with your actual email -->
                 <input type="hidden" id="recipientEmail" value="fernandoimasha2003@gmail.com">
-            </div>
-
-            <!-- Interactive Click Feature 3 -->
-            <div class="interactive-feature">
-                <button class="feature-btn" id="surpriseBtn3">
-                    <span>🎊 One More Surprise! 🎊</span>
-                </button>
-                <div class="surprise-content" id="surprise3">
-                    <p class="surprise-text">✨ You are destined for greatness in 2026! ✨</p>
-                </div>
             </div>
 
             <!-- Final Message -->
@@ -183,6 +176,8 @@
                     🎊 Make It Rain! 🎊
                 </button>
             </div>
+            </div>
+            <!-- End Hidden Content -->
         </div>
 
         <!-- Music Control -->

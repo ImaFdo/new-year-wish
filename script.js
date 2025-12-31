@@ -86,6 +86,32 @@ function updateUrl() {
 setNamesFromUrl();
 updateUrlParams();
 
+// Scroll Indicator
+const scrollIndicator = document.getElementById('scrollIndicator');
+const hiddenContent = document.getElementById('hiddenContent');
+
+if (scrollIndicator && hiddenContent) {
+    scrollIndicator.addEventListener('click', () => {
+        // Reveal the hidden content
+        hiddenContent.classList.add('revealed');
+        
+        // Hide the scroll indicator after revealing content
+        scrollIndicator.style.opacity = '0';
+        scrollIndicator.style.pointerEvents = 'none';
+        
+        // Scroll to the revealed content smoothly
+        setTimeout(() => {
+            const firstFeature = document.querySelector('.interactive-feature');
+            if (firstFeature) {
+                firstFeature.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }, 300);
+    });
+}
+
 // Initial Popup
 const initialPopup = document.getElementById('initialPopup');
 const openCardBtn = document.getElementById('openCardBtn');
@@ -100,19 +126,21 @@ openCardBtn.addEventListener('click', () => {
     setTimeout(() => {
         initialPopup.style.display = 'none';
         
-        // Show bear animation
-        bearAnimation.classList.add('active');
+        // Show bear animation after 1 second
+        setTimeout(() => {
+            bearAnimation.classList.add('active');
+        }, 1000);
         
         // Play music with multiple attempts
         function tryPlayMusic() {
-            bgMusic.volume = 0.7;
+            bgMusic.volume = 0.4;
             bgMusic.muted = false;
             
             const playPromise = bgMusic.play();
             
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    console.log('✅ Music playing successfully at 70% volume');
+                    console.log('✅ Music playing successfully at 40% volume');
                 }).catch(error => {
                     console.log('⚠️ Autoplay blocked. Click anywhere to start music.', error);
                     // Try unmuted play on next interaction
@@ -122,7 +150,7 @@ openCardBtn.addEventListener('click', () => {
                         }).catch(e => {
                             console.log('❌ Music failed:', e);
                             // Last resort: try with lower volume
-                            bgMusic.volume = 0.5;
+                            bgMusic.volume = 0.3;
                             bgMusic.play();
                         });
                     }, { once: true });
@@ -258,30 +286,76 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
-// Interactive Surprise Buttons
+// Interactive Surprise Buttons (guard in case elements are removed)
 const surpriseBtn1 = document.getElementById('surpriseBtn1');
 const surprise1 = document.getElementById('surprise1');
 
-surpriseBtn1.addEventListener('click', () => {
-    surprise1.classList.toggle('active');
-    createExplosion(surpriseBtn1);
-});
+if (surpriseBtn1 && surprise1) {
+    surpriseBtn1.addEventListener('click', () => {
+        surprise1.classList.toggle('active');
+        createExplosion(surpriseBtn1);
+    });
+}
 
-const surpriseBtn2 = document.getElementById('surpriseBtn2');
-const surprise2 = document.getElementById('surprise2');
+// Champagne Toast Animation
+const champagneBtn = document.getElementById('champagneBtn');
+const champagneAnimation = document.getElementById('champagneAnimation');
 
-surpriseBtn2.addEventListener('click', () => {
-    surprise2.classList.toggle('active');
-    createExplosion(surpriseBtn2);
-});
+if (champagneBtn && champagneAnimation) {
+    champagneBtn.addEventListener('click', () => {
+        champagneBtn.style.display = 'none';
+        champagneAnimation.classList.add('active');
+        
+        // Animate cork
+        const cork = document.querySelector('.champagne-cork');
+        cork.classList.add('pop');
+        
+        // Create bubbles
+        setTimeout(() => {
+            createChampagneBubbles();
+        }, 300);
+        
+        // Show message
+        const message = document.querySelector('.champagne-message');
+        message.classList.add('show');
+        
+        // Create explosion effect
+        createExplosion(champagneBtn);
+    });
+}
+
+function createChampagneBubbles() {
+    const bubblesContainer = document.querySelector('.champagne-bubbles');
+    const bubbleCount = 50;
+    
+    for (let i = 0; i < bubbleCount; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        
+        const size = Math.random() * 30 + 10;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = (50 + (Math.random() - 0.5) * 40) + '%';
+        bubble.style.bottom = '80px';
+        bubble.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
+        bubble.style.animationDelay = (Math.random() * 0.5) + 's';
+        bubble.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        
+        bubblesContainer.appendChild(bubble);
+        
+        setTimeout(() => bubble.remove(), 5000);
+    }
+}
 
 const surpriseBtn3 = document.getElementById('surpriseBtn3');
 const surprise3 = document.getElementById('surprise3');
 
-surpriseBtn3.addEventListener('click', () => {
-    surprise3.classList.toggle('active');
-    createExplosion(surpriseBtn3);
-});
+if (surpriseBtn3 && surprise3) {
+    surpriseBtn3.addEventListener('click', () => {
+        surprise3.classList.toggle('active');
+        createExplosion(surpriseBtn3);
+    });
+}
 
 function createExplosion(element) {
     const rect = element.getBoundingClientRect();
@@ -293,6 +367,75 @@ function createExplosion(element) {
     }
 }
 
+// Lantern Release (run after page load to ensure elements exist)
+function initLanternRelease() {
+    const mainLantern = document.getElementById('mainLantern');
+    const skyLanternsContainer = document.getElementById('skyLanternsContainer');
+
+    if (!mainLantern || !skyLanternsContainer) {
+        return;
+    }
+
+    mainLantern.addEventListener('click', () => {
+        // Add opening class to trigger door animation
+        mainLantern.classList.add('opening');
+        
+        // Get position of the lantern body (not the whole lantern)
+        const lanternBody = mainLantern.querySelector('.lantern-body');
+        const rect = lanternBody.getBoundingClientRect();
+        const startX = rect.left + rect.width / 2;
+        const startY = rect.top + rect.height / 2;
+
+        // Wait for doors to open, then release lanterns
+        setTimeout(() => {
+            // Release multiple sky lanterns from inside
+            const lanternCount = 8;
+            for (let i = 0; i < lanternCount; i++) {
+                setTimeout(() => {
+                    createSkyLantern(startX, startY, skyLanternsContainer);
+                }, i * 250);
+            }
+
+            // Create explosion effect at the lantern
+            createExplosion(mainLantern);
+        }, 600);
+    });
+}
+
+function createSkyLantern(startX, startY, container) {
+    if (!container) return;
+
+    const lantern = document.createElement('div');
+    lantern.className = 'sky-lantern';
+    
+    // Random drift values for more natural floating
+    const driftStart = (Math.random() - 0.5) * 120;
+    const driftEnd = (Math.random() - 0.5) * 360;
+    
+    lantern.style.left = startX + 'px';
+    lantern.style.top = startY + 'px';
+    lantern.style.setProperty('--drift-start', driftStart + 'px');
+    lantern.style.setProperty('--drift-end', driftEnd + 'px');
+
+    lantern.innerHTML = `
+        <div class="sky-lantern-top"></div>
+        <div class="sky-lantern-body">
+            <div class="sky-lantern-flame"></div>
+        </div>
+        <div class="sky-lantern-bottom"></div>
+    `;
+    
+    container.appendChild(lantern);
+    
+    // Remove after animation
+    setTimeout(() => {
+        lantern.remove();
+    }, 8000);
+}
+
+// Initialize lantern click behavior (HTML is already loaded because script is at the end of body)
+initLanternRelease();
+
 // Wish Jar
 const wishInput = document.getElementById('wishInput');
 const visitorName = document.getElementById('visitorName');
@@ -302,24 +445,48 @@ const wishesDisplay = document.getElementById('wishesDisplay');
 const recipientEmail = document.getElementById('recipientEmail');
 let wishes = [];
 
+// Load wishes from localStorage on page load
+function loadWishesFromStorage() {
+    const storedWishes = localStorage.getItem('newYearWishes');
+    if (storedWishes) {
+        wishes = JSON.parse(storedWishes);
+        // Display all stored wishes
+        wishes.forEach(wishData => {
+            displayWishInJar(wishData.wish);
+        });
+    }
+}
+
+// Save wishes to localStorage
+function saveWishesToStorage() {
+    localStorage.setItem('newYearWishes', JSON.stringify(wishes));
+}
+
+// Display a single wish in the jar
+function displayWishInJar(wishText) {
+    const wishItem = document.createElement('div');
+    wishItem.className = 'wish-item';
+    wishItem.textContent = '⭐ ' + wishText;
+    collectedWishes.appendChild(wishItem);
+}
+
+// Load wishes when page loads
+loadWishesFromStorage();
+
 addWishBtn.addEventListener('click', () => {
     const wish = wishInput.value.trim();
     const name = visitorName.value.trim() || 'Anonymous';
     
     if (wish) {
-        wishes.push({ name, wish, date: new Date().toLocaleString() });
+        // Save to array
+        const wishData = { name, wish, date: new Date().toLocaleString() };
+        wishes.push(wishData);
         
-        // Add to jar
-        const wishItem = document.createElement('div');
-        wishItem.className = 'wish-item';
-        wishItem.textContent = '⭐ ' + wish;
-        collectedWishes.appendChild(wishItem);
+        // Save to localStorage
+        saveWishesToStorage();
         
-        // Add to display
-        const wishCard = document.createElement('div');
-        wishCard.className = 'wish-card';
-        wishCard.innerHTML = `<strong>${name}:</strong><br>${wish}`;
-        wishesDisplay.appendChild(wishCard);
+        // Display in jar
+        displayWishInJar(wish);
         
         // Send email via FormSubmit
         sendWishEmail(name, wish);
@@ -432,7 +599,7 @@ musicBtn.addEventListener('click', () => {
 // Auto-start music on any user interaction
 document.addEventListener('click', function startMusic() {
     if (bgMusic.paused && isMusicPlaying) {
-        bgMusic.volume = 0.7; // Set volume to 70%
+        bgMusic.volume = 0.4; // Set volume to 40%
         bgMusic.play().catch(e => console.log('Music autoplay prevented'));
     }
 }, { once: true });
