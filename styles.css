@@ -53,6 +53,13 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
     font-family: var(--font-family);
     overflow-x: hidden;
@@ -64,7 +71,9 @@ body {
         var(--color-primary-purple) 75%, 
         var(--color-primary-dark) 100%
     );
+    background-attachment: fixed;
     color: var(--color-white);
+    min-height: 100vh;
 }
 
 /* =============================================================================
@@ -808,56 +817,103 @@ body {
 /* Scroll Indicator */
 .scroll-indicator {
     text-align: center;
-    margin: 40px 0 60px 0;
-    cursor: pointer;
-    animation: fadeInUp 1s forwards 2s, scrollBounce 2s infinite 3s;
-    opacity: 0;
-    transition: all 0.3s ease;
+    margin: 60px 0 40px;
+    animation: indicatorFade 2s ease-in-out infinite;
+    transition: opacity 0.5s ease;
 }
 
-.scroll-indicator:hover {
-    transform: translateY(5px);
+.scroll-arrow-animated {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: -10px;
 }
 
-.scroll-text {
-    font-size: 1.3em;
-    color: #ffd700;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-}
-
-.scroll-arrow {
+.scroll-arrow-animated span {
     font-size: 2.5em;
-    color: #ffd700;
-    animation: arrowFloat 1.5s ease-in-out infinite;
+    color: var(--color-accent-gold);
+    animation: cascadeArrow 1.5s ease-in-out infinite;
+    opacity: 0;
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
 }
 
-@keyframes scrollBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.scroll-arrow-animated span:nth-child(1) {
+    animation-delay: 0s;
 }
 
-@keyframes arrowFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(10px); }
+.scroll-arrow-animated span:nth-child(2) {
+    animation-delay: 0.2s;
 }
 
-/* Hidden Content Container */
-.hidden-content {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 1s ease;
+.scroll-arrow-animated span:nth-child(3) {
+    animation-delay: 0.4s;
 }
 
-.hidden-content.revealed {
-    max-height: 10000px;
+.scroll-hint {
+    font-size: 1.2em;
+    color: var(--color-accent-cyan);
+    margin-top: 15px;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(78, 205, 196, 0.6);
+    animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes cascadeArrow {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hintPulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes indicatorFade {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Scroll Content Container */
+.scroll-content {
     opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease-out;
 }
+
+/* Scroll Reveal Animation */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger animation delays for sequential reveals */
+.scroll-reveal:nth-child(1) { transition-delay: 0.1s; }
+.scroll-reveal:nth-child(2) { transition-delay: 0.2s; }
+.scroll-reveal:nth-child(3) { transition-delay: 0.3s; }
+.scroll-reveal:nth-child(4) { transition-delay: 0.4s; }
+.scroll-reveal:nth-child(5) { transition-delay: 0.5s; }
 
 /* Surprise Message Display */
 .surprise-message-display {
@@ -890,6 +946,10 @@ body {
     font-weight: bold;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
     transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 44px;
+    min-width: 44px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .feature-btn:hover {
@@ -1740,10 +1800,35 @@ body {
     50% { transform: scale(1.2); }
 }
 
-/* Responsive Design */
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+/* Large Tablets and Small Desktops (1024px - 1200px) */
+@media (max-width: 1200px) {
+    .content-section {
+        max-width: 960px;
+        padding: 35px 20px;
+    }
+    
+    .wish-jar-section {
+        padding: 50px 20px;
+    }
+}
+
+/* Tablets (768px - 1024px) */
 @media (max-width: 1024px) {
+    html {
+        font-size: 15px;
+    }
+    
     .main-title {
         font-size: 3em;
+        margin-bottom: 30px;
+    }
+    
+    .greeting-line {
+        font-size: 1.3em;
     }
     
     .gift-icon {
@@ -1757,16 +1842,51 @@ body {
     .popup-spark {
         font-size: 1.8em;
     }
+    
+    .countdown-text .number-animate {
+        font-size: 6em;
+    }
+    
+    .name-input {
+        font-size: 3em;
+    }
+    
+    .from-to-container {
+        gap: 30px;
+    }
+    
+    .interactive-feature {
+        margin: 50px 0;
+    }
+    
+    .champagne-section {
+        min-height: 350px;
+    }
+    
+    .lantern-section {
+        padding: 50px 20px;
+    }
 }
 
+/* Mobile Devices (up to 768px) */
 @media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
     body {
         overflow-x: hidden;
+    }
+    
+    .main-card {
+        padding: 15px;
     }
     
     .main-title {
         font-size: 2.5em;
         padding: 0 10px;
+        margin-bottom: 30px;
+        line-height: 1.2;
     }
     
     .title-sparkle {
@@ -2066,6 +2186,382 @@ body {
     
     .sparkle {
         font-size: 14px;
+    }
+}
+
+/* =============================================================================
+   LANDSCAPE ORIENTATION
+   ============================================================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+    .main-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    
+    .greeting-line {
+        font-size: 0.9em;
+        margin: 5px 0;
+    }
+    
+    .popup-content {
+        height: 90vh;
+        width: auto;
+    }
+    
+    .gift-icon {
+        font-size: 4em;
+    }
+    
+    .gift-text {
+        font-size: 1.5em;
+    }
+    
+    .countdown-text .number-animate {
+        font-size: 3em;
+    }
+    
+    .jar {
+        transform: scale(0.8);
+    }
+    
+    .lantern-main {
+        font-size: 60px;
+    }
+    
+    .content-section {
+        padding: 20px 15px;
+    }
+    
+    .wish-jar-section {
+        padding: 30px 15px;
+    }
+}
+
+/* =============================================================================
+   EXTRA SMALL DEVICES (320px and below)
+   ============================================================================= */
+@media (max-width: 320px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .main-title {
+        font-size: 1.5em;
+    }
+    
+    .greeting-line {
+        font-size: 0.9em;
+    }
+    
+    .countdown-text .number-animate {
+        font-size: 2.5em;
+    }
+    
+    .name-input {
+        font-size: 1.5em;
+    }
+    
+    .jar {
+        width: 120px;
+        height: 200px;
+    }
+    
+    .jar-body {
+        width: 120px;
+        height: 175px;
+    }
+    
+    .confetti-btn {
+        font-size: 1.1em;
+        padding: 15px 30px;
+    }
+}
+
+/* =============================================================================
+   TOUCH DEVICE IMPROVEMENTS
+   ============================================================================= */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch target sizes */
+    button, .feature-btn, .confetti-btn, .add-wish-btn, .music-btn {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 15px 30px;
+    }
+    
+    .gift-circle {
+        min-height: 200px;
+        min-width: 200px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .feature-btn:hover,
+    .confetti-btn:hover,
+    .add-wish-btn:hover,
+    .gift-circle:hover {
+        transform: none;
+    }
+    
+    /* Add active states for touch feedback */
+    .feature-btn:active,
+    .confetti-btn:active,
+    .add-wish-btn:active {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    
+    /* Improve scroll indicator for touch */
+    .scroll-indicator {
+        padding: 15px;
+    }
+}
+
+/* =============================================================================
+   PRINT STYLES
+   ============================================================================= */
+@media print {
+    .music-control,
+    .scroll-indicator,
+    .magic-wand,
+    .floating-lanterns,
+    .floating-stars,
+    #fireworksCanvas {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .main-card {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE
+   ============================================================================= */
+@media (prefers-contrast: high) {
+    body {
+        background: #000;
+    }
+    
+    .main-title,
+    .greeting-line,
+    .scroll-text,
+    .jar-title {
+        text-shadow: none;
+        font-weight: bold;
+    }
+}
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .magic-wand,
+    .wand-trail,
+    .floating-lanterns,
+    .floating-stars,
+    .balloons-container {
+        animation: none !important;
+    }
+}
+
+/* =============================================================================
+   LANDSCAPE ORIENTATION
+   ============================================================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+    .main-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    
+    .greeting-line {
+        font-size: 0.9em;
+        margin: 5px 0;
+    }
+    
+    .popup-content {
+        height: 90vh;
+        width: auto;
+    }
+    
+    .gift-icon {
+        font-size: 4em;
+    }
+    
+    .gift-text {
+        font-size: 1.5em;
+    }
+    
+    .countdown-text .number-animate {
+        font-size: 3em;
+    }
+    
+    .jar {
+        transform: scale(0.8);
+    }
+    
+    .lantern-main {
+        font-size: 60px;
+    }
+    
+    .content-section {
+        padding: 20px 15px;
+    }
+    
+    .wish-jar-section {
+        padding: 30px 15px;
+    }
+}
+
+/* =============================================================================
+   EXTRA SMALL DEVICES (320px and below)
+   ============================================================================= */
+@media (max-width: 320px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .main-title {
+        font-size: 1.5em;
+    }
+    
+    .greeting-line {
+        font-size: 0.9em;
+    }
+    
+    .countdown-text .number-animate {
+        font-size: 2.5em;
+    }
+    
+    .name-input {
+        font-size: 1.5em;
+    }
+    
+    .jar {
+        width: 120px;
+        height: 200px;
+    }
+    
+    .jar-body {
+        width: 120px;
+        height: 175px;
+    }
+    
+    .confetti-btn {
+        font-size: 1.1em;
+        padding: 15px 30px;
+    }
+}
+
+/* =============================================================================
+   TOUCH DEVICE IMPROVEMENTS
+   ============================================================================= */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch target sizes */
+    button, .feature-btn, .confetti-btn, .add-wish-btn, .music-btn {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 15px 30px;
+    }
+    
+    .gift-circle {
+        min-height: 200px;
+        min-width: 200px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .feature-btn:hover,
+    .confetti-btn:hover,
+    .add-wish-btn:hover,
+    .gift-circle:hover {
+        transform: none;
+    }
+    
+    /* Add active states for touch feedback */
+    .feature-btn:active,
+    .confetti-btn:active,
+    .add-wish-btn:active {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    
+    /* Improve scroll indicator for touch */
+    .scroll-indicator {
+        padding: 15px;
+    }
+}
+
+/* =============================================================================
+   PRINT STYLES
+   ============================================================================= */
+@media print {
+    .music-control,
+    .scroll-indicator,
+    .magic-wand,
+    .floating-lanterns,
+    .floating-stars,
+    #fireworksCanvas {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .main-card {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE
+   ============================================================================= */
+@media (prefers-contrast: high) {
+    body {
+        background: #000;
+    }
+    
+    .main-title,
+    .greeting-line,
+    .scroll-text,
+    .jar-title {
+        text-shadow: none;
+        font-weight: bold;
+    }
+}
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .magic-wand,
+    .wand-trail,
+    .floating-lanterns,
+    .floating-stars,
+    .balloons-container {
+        animation: none !important;
     }
 }
 

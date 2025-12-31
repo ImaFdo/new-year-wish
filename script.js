@@ -218,6 +218,9 @@ const PopupManager = {
     },
 
     handleOpenCard() {
+        // Scroll to top immediately
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        
         this.initialPopup.style.animation = 'fadeOut 0.5s ease forwards';
         
         setTimeout(() => {
@@ -232,6 +235,9 @@ const PopupManager = {
             setTimeout(() => {
                 this.mainCard.classList.add('visible');
                 FireworksEngine.start();
+                
+                // Ensure page is at top when main card appears
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 
                 if (MusicManager.bgMusic.paused) {
                     MusicManager.tryPlayMusic();
